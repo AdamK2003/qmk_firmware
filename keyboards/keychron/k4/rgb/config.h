@@ -18,6 +18,7 @@
 #pragma once
 
 #include "config_common.h"
+#include "config_led.h"
 
 /* key matrix size */
 #define MATRIX_ROWS 6
@@ -33,5 +34,3 @@
 
 /* Debounce reduces chatter (unintended double-presses) - set 0 if debouncing is not needed */
 #define DEBOUNCE 0
-
-#include "config_led.h"

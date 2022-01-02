@@ -18,6 +18,7 @@
 #pragma once
 
 #include "config_common.h"
+#include "config_led.h"
 
 #define MANUFACTURER    Keychron
 #define PRODUCT         K8 RGB
@@ -42,5 +43,3 @@
 #define DEBOUNCE 0
 
 //#define FORCE_NKRO
-
-#include "config_led.h"

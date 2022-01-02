@@ -18,6 +18,7 @@
 #pragma once
 
 #include "config_common.h"
+#include "config_led.h"
 
 #define MANUFACTURER    Keychron
 #define PRODUCT         K2 RGB
@@ -40,5 +41,3 @@
 /* LED Status indicators */
 #define LED_CAPS_LOCK_PIN B9
 #define LED_PIN_ON_STATE  1
-
-#include "config_led.h"
