@@ -14,11 +14,5 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* USB Device descriptor parameter */
-#define VENDOR_ID       0x05AC
-#define PRODUCT_ID      0x024F
-#define DEVICE_VER      0x0001
-
 #define MANUFACTURER    Keychron
-#define PRODUCT         K4
-#define DESCRIPTION     K4 Gateron RGB v1
+#define PRODUCT         K4v1 RGB
