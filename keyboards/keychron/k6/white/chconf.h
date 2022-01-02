@@ -43,7 +43,7 @@
  * @note    Allowed values are 16 or 32 bits.
  */
 #    if !defined(CH_CFG_ST_RESOLUTION)
-#        define CH_CFG_ST_RESOLUTION 16
+#        define CH_CFG_ST_RESOLUTION 32
 #    endif
 
 /**
@@ -694,6 +694,21 @@
 /*===========================================================================*/
 /* Port-specific settings (override port settings defaulted in chcore.h).    */
 /*===========================================================================*/
+
+// Size optimizations to fit VIA support
+//
+// These optimizations are pretty intrusive because they remove the idle thread.
+// Without idle thread some sleep related functions no longer function.
+// These broken functions are overwritten with patched variants.
+//
+// These optimization are copied from:
+// https://github.com/gloryhzw/qmk_firmware/blob/sn32/keyboards/gmmk/full
+//
+// Make the broken functions weak so they can be overwritten with fixed variants
+#if CH_CFG_NO_IDLE_THREAD == TRUE
+    #pragma weak chThdSleep
+    #pragma weak chThdSuspendTimeoutS
+#endif
 
 #endif /* CHCONF_H */
 

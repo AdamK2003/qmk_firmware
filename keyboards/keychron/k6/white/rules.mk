@@ -1,4 +1,6 @@
 # project specific files
+SRC += rand.c
+SRC += config_led.c
 
 ## chip/board settings
 # - the next two should match the directories in
@@ -26,38 +28,33 @@ MCU  = cortex-m0
 ARMV = 6
 
 # BOOTLOADER = flash
-# SN32_BOOTLOADER_ADDRESS = 0x1FFF0009
+SN32_BOOTLOADER_ADDRESS = 0x1FFF0009
 
-OPT_DEFS = -O2
-
-# Options to pass to dfu-util when flashing
-# DFU_ARGS = -d 0483:df11 -a 0 -s 0x08000000:leave
-# DFU_SUFFIX_ARGS = -p DF11 -v 0483
+# Optimize for size
+OPT_DEFS = -Os
 
 # Build Options
 #   comment out to disable the options.
 #
-LTO_ENABLE = no # linker optimization
-
-BACKLIGHT_ENABLE = yes
-BACKLIGHT_DRIVER = software
-
 MAGIC_ENABLE = yes
-BOOTMAGIC_ENABLE = no # Virtual DIP switch configuration
-MOUSEKEY_ENABLE = no    # Mouse keys
-EXTRAKEY_ENABLE = no    # Audio control and System control
-SLEEP_LED_ENABLE = no   # Breathing sleep LED during USB suspend
-NKRO_ENABLE = no        # USB Nkey Rollover
-SERIAL_LINK_ENABLE = no
-WAIT_FOR_USB = no
-CUSTOM_MATRIX = no
+MAGIC_KEYCODE_ENABLE = yes
+BOOTMAGIC_ENABLE = full 	# Virtual DIP switch configuration
+EXTRAKEY_ENABLE = yes   	# Audio control and System control
+NKRO_ENABLE = yes       	# USB Nkey Rollover
+DIP_SWITCH_ENABLE = yes
 
-# some options to reduce ram usage
+# Custom Key and LED matrix handling
+CUSTOM_MATRIX = yes
+RGB_MATRIX_ENABLE = yes
+RGB_MATRIX_DRIVER = SN32F26x
+RGB_MATRIX_CUSTOM_KB = yes
+
+# Some options to reduce RAM usage
 LDFLAGS += --specs=nano.specs
-# process stack size of 0x1c0 crashes during SEND_STRING
-USE_EXCEPTIONS_STACKSIZE = 0x180
-USE_PROCESS_STACKSIZE = 0x210
+OPT_DEFS += -DCORTEX_ENABLE_WFI_IDLE=TRUE
+USE_LINK_GC = yes
+LTO_ENABLE = yes
 
-
-# LED_MATRIX_ENABLE = yes
-# LED_MATRIX_DRIVER = SN32F260
+# Reduce code size
+USE_PROCESS_STACKSIZE = 0x1E0
+USE_EXCEPTIONS_STACKSIZE = 0xF0

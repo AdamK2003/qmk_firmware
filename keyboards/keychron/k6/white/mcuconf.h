@@ -18,7 +18,7 @@
 #define MCUCONF_H
 
 /*
- * STM32F0xx drivers configuration.
+ * SN32F26x drivers configuration.
  * The following settings override the default settings present in
  * the various device driver implementation headers.
  * Note that the settings for each driver only have effect if the whole
@@ -31,7 +31,8 @@
  * 0...3        Lowest...Highest.
  */
 
-#define STM32F0xx_MCUCONF
+#define SN32F26x_MCUCONF
+#define PLATFORM_MCUCONF
 
 /*
  * HAL driver system settings.
@@ -40,9 +41,6 @@
 /*
  * SN driver system settings.
  */
-#define SN32_CT_IRQ_PRIORITY 2
-#define SN32_CT_USE_TIMER 2
-
 #define SN32_HAS_GPIOA TRUE
 #define SN32_HAS_GPIOB TRUE
 #define SN32_HAS_GPIOC TRUE
@@ -51,43 +49,13 @@
 /*
  * USB driver system settings.
  */
-#define SN32_USB_USE_USB1 TRUE
-#define SN32_USB_LOW_POWER_ON_SUSPEND TRUE
-#define STM32_USB_USB1_HP_IRQ_PRIORITY 13
-#define STM32_USB_USB1_LP_IRQ_PRIORITY 14
-
 #define CRT1_AREAS_NUMBER 1
-
 #define PLATFORM_USB_USE_USB1 TRUE
 
 /*
- * Timer driver system settings.
+ * System Clock settings.
  */
-#define SN32_PWM_USE_TIM1                  FALSE
-#define SN32_PWM_USE_TIM2                  TRUE
-#define SN32_PWM_TIM1_IRQ_PRIORITY         3
-#define SN32_PWM_TIM2_IRQ_PRIORITY         3
+// Defaults are correct
 
-#define SYS_CLOCK_SETUP 1
-#define SYS0_CLKCFG_VAL 0
-#define AHB_PRESCALAR 0x2
-#define CLKOUT_SEL_VAL 0x0
-#define CLKOUT_PRESCALAR 0x0
-
-/*----------------------------------------------------------------------------
-  DEFINES
- *----------------------------------------------------------------------------*/
-#define IHRC48 0
-#define ILRC 1
-
-/*----------------------------------------------------------------------------
-  Define clocks
- *----------------------------------------------------------------------------*/
-#define __IHRC48_FREQ (48000000UL)
-#define __ILRC_FREQ (32000UL)
-
-// #endif /* _MCUCONF_H_ */
-
-#define PLATFORM_MCUCONF
 
 #endif /* MCUCONF_H */
