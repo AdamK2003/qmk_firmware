@@ -47,7 +47,6 @@ DIP_SWITCH_ENABLE = yes
 CUSTOM_MATRIX = yes
 RGB_MATRIX_ENABLE = yes
 RGB_MATRIX_DRIVER = SN32F26x
-RGB_MATRIX_CUSTOM_KB = yes
 
 # Some options to reduce RAM usage
 LDFLAGS += --specs=nano.specs
