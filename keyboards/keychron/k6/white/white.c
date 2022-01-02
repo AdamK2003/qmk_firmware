@@ -15,18 +15,6 @@
  */
 #include "white.h"
 
-void dip_switch_update_kb(uint8_t index, bool active){
-    if(index == 0) {
-        if(active) { // Mac mode
-            layer_move(MAC_BASE);
-        } else { // Windows mode
-            layer_move(WIN_BASE);
-        }
-    }
-
-    dip_switch_update_user(index, active);
-}
-
 void suspend_power_down_kb(void) {
     // Suspend backlight
     rgb_matrix_set_suspend_state(true);
