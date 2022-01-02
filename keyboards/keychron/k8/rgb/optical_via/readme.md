@@ -4,7 +4,7 @@ K8 Optical Hotswap RGB with VIA support
 
 Make example for this keyboard (after setting up your build environment):
 
-    make keychron/k8/optical_via:ansi
+    make keychron/k8/rgb/optical_via:ansi
 
 * * *
 For more info and detailed flashing instructions, please visit https://github.com/alex-dinh/keychron-k8

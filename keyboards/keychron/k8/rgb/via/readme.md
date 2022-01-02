@@ -8,7 +8,7 @@ Make example for this keyboard (after setting up your build environment):
 
 For default ISO:
 
-    make keychron/k8/via:iso
+    make keychron/k8/rgb/via:iso
     
 * * *
 For more info and detailed flashing instructions, please visit https://github.com/alex-dinh/keychron-k8

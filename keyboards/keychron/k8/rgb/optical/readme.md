@@ -1,10 +1,10 @@
 # Keychron K8
 
-K8 Optical Hotswap RGB
+K8 Optical RGB
 
 Make example for this keyboard (after setting up your build environment):
 
-    make keychron/k8/optical:ansi
+    make keychron/k8/rgb/optical:ansi
 
 * * *
 For more info and detailed flashing instructions, please visit https://github.com/alex-dinh/keychron-k8
