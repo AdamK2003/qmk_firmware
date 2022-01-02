@@ -16,6 +16,7 @@
 
 #define MANUFACTURER    Keychron
 #define PRODUCT         K4v2 RGB
+#define DEVICE_VER          0x0001
 
 /* LED Status indicators */
 #define LED_CAPS_LOCK_PIN B12
