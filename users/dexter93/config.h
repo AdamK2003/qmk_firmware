@@ -5,11 +5,6 @@
 #define USB_POLLING_INTERVAL_MS 1
 
 #ifdef RGB_MATRIX_ENABLE
-#    define RGB_MATRIX_KEYPRESSES  // reacts to keypresses (will slow down matrix scan by a lot)
-// #   define RGB_MATRIX_KEYRELEASES // reacts to keyreleases (not recommened)
-#    define RGB_MATRIX_FRAMEBUFFER_EFFECTS
-#    define ENABLE_RGB_MATRIX_TYPING_HEATMAP
-#    define ENABLE_RGB_MATRIX_CYCLE_OUT_IN_DUAL
 // RGB Matrix Animation modes. Explicitly enabled
 // For full list of effects, see:
 // https://docs.qmk.fm/#/feature_rgb_matrix?id=rgb-matrix-effects
@@ -27,6 +22,7 @@
 #        define ENABLE_RGB_MATRIX_CYCLE_UP_DOWN
 #        define ENABLE_RGB_MATRIX_RAINBOW_MOVING_CHEVRON
 #        define ENABLE_RGB_MATRIX_CYCLE_OUT_IN
+#        define ENABLE_RGB_MATRIX_CYCLE_OUT_IN_DUAL
 #        define ENABLE_RGB_MATRIX_CYCLE_PINWHEEL
 #        define ENABLE_RGB_MATRIX_CYCLE_SPIRAL
 #        define ENABLE_RGB_MATRIX_DUAL_BEACON
