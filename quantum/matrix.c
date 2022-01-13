@@ -57,6 +57,15 @@ static SPLIT_MUTABLE_COL pin_t col_pins[MATRIX_COLS] = MATRIX_COL_PINS;
 #    endif  // MATRIX_COL_PINS
 #endif
 
+#if defined(OPTICAL_MATRIX)
+#ifndef PRESSED_KEY_PIN_STATE
+#    define PRESSED_KEY_PIN_STATE 1
+#endif
+#endif
+#ifndef PRESSED_KEY_PIN_STATE
+#    define PRESSED_KEY_PIN_STATE 0
+#endif
+
 /* matrix state(1:on, 0:off) */
 extern matrix_row_t raw_matrix[MATRIX_ROWS];  // raw values
 extern matrix_row_t matrix[MATRIX_ROWS];      // debounced values
@@ -117,7 +126,7 @@ __attribute__((weak)) void matrix_read_cols_on_row(matrix_row_t current_matrix[]
     for (uint8_t col_index = 0; col_index < MATRIX_COLS; col_index++, row_shifter <<= 1) {
         pin_t pin = direct_pins[current_row][col_index];
         if (pin != NO_PIN) {
-            current_row_value |= readPin(pin) ? 0 : row_shifter;
+            current_row_value |= readPin(pin) ? PRESSED_KEY_PIN_STATE : row_shifter;
         }
     }
 
@@ -175,7 +184,7 @@ __attribute__((weak)) void matrix_read_cols_on_row(matrix_row_t current_matrix[]
         uint8_t pin_state = readMatrixPin(col_pins[col_index]);
 
         // Populate the matrix row with the state of the col pin
-        current_row_value |= pin_state ? 0 : row_shifter;
+        current_row_value |= pin_state ? PRESSED_KEY_PIN_STATE : row_shifter;
     }
 
     // Unselect row
