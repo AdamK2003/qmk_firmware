@@ -44,6 +44,10 @@ uint8_t matrix_cols(void);
 void matrix_setup(void);
 /* intialize matrix for scaning. */
 void matrix_init(void);
+/* read the key matrix rows on col */
+__attribute__((weak)) void matrix_read_rows_on_col(matrix_row_t current_matrix[], uint8_t current_col, matrix_row_t row_shifter);
+/* read the key matrix cols on row */
+__attribute__((weak)) void matrix_read_cols_on_row(matrix_row_t current_matrix[], uint8_t current_row);
 /* scan all key states on matrix */
 __attribute__((weak)) uint8_t matrix_scan(void);
 /* whether modified from previous scan. used after matrix_scan. */
