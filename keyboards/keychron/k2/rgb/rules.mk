@@ -1,6 +1,5 @@
 # project specific files
-SRC = ../../../drivers/led/sn32/matrix_sn32f24xx.c
-SRC += config_led.c
+SRC = config_led.c
 
 # MCU name
 MCU = SN32F248BF
@@ -21,7 +20,7 @@ AUDIO_ENABLE = no
 RGBLIGHT_ENABLE = no
 SERIAL_LINK_ENABLE = no
 WAIT_FOR_USB = no
-CUSTOM_MATRIX = yes
+CUSTOM_MATRIX = no
 DIP_SWITCH_ENABLE = yes
 
 # Custom RGB matrix handling
