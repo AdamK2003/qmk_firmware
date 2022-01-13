@@ -1,4 +1,7 @@
 #include "rgb_matrix.h"
+#include "quantum.h"
+#include "matrix.h"
+#include "debounce.h"
 #include "sn32f24xb.h"
 
 #if !defined(RGB_MATRIX_HUE_STEP)
@@ -52,12 +55,14 @@
 static uint8_t chan_col_order[LED_MATRIX_COLS] = {0}; // track the channel col order
 static uint8_t current_row = 0; // LED row scan counter
 static uint8_t row_idx = 0; // key row scan counter
-extern matrix_row_t raw_matrix[MATRIX_ROWS]; //raw values
+extern matrix_row_t raw_matrix[MATRIX_ROWS];  // raw values
+extern matrix_row_t matrix[MATRIX_ROWS];      // debounced values
 static const uint32_t freq = (RGB_MATRIX_HUE_STEP * RGB_MATRIX_SAT_STEP * RGB_MATRIX_VAL_STEP * RGB_MATRIX_SPD_STEP * RGB_MATRIX_LED_PROCESS_LIMIT);
 static const pin_t led_row_pins[LED_MATRIX_ROWS_HW] = LED_MATRIX_ROW_PINS; // We expect a R,B,G order here
 static const pin_t led_col_pins[LED_MATRIX_COLS] = LED_MATRIX_COL_PINS;
 RGB led_state[DRIVER_LED_TOTAL]; // led state buffer
 bool enable_pwm = false;
+matrix_row_t curr_matrix[MATRIX_ROWS] = {0};
 
 /* PWM configuration structure. We use timer CT16B1 with 24 channels. */
 static PWMConfig pwmcfg = {
@@ -290,10 +295,11 @@ void shared_matrix_rgb_disable_leds(void) {
 }
 
 void update_pwm_channels(PWMDriver *pwmp) {
-    for(uint8_t col_idx = 0; col_idx < LED_MATRIX_COLS; col_idx++) {
+    matrix_row_t row_shifter = MATRIX_ROW_SHIFTER;
+    for(uint8_t col_idx = 0; col_idx < LED_MATRIX_COLS; col_idx++, row_shifter <<= 1) {
         #if(DIODE_DIRECTION == ROW2COL)
             // Scan the key matrix column
-            matrix_scan_keys(raw_matrix,col_idx);
+            matrix_read_rows_on_col(curr_matrix, col_idx, row_shifter);
         #endif
         uint8_t led_index = g_led_config.matrix_co[row_idx][col_idx];
         // Check if we need to enable RGB output
@@ -331,7 +337,7 @@ void rgb_callback(PWMDriver *pwmp) {
     shared_matrix_rgb_disable_pwm();
     #if(DIODE_DIRECTION == COL2ROW)
         // Scan the key matrix row
-        matrix_scan_keys(raw_matrix, row_idx);
+        matrix_read_cols_on_row(curr_matrix, row_idx);
     #endif
     update_pwm_channels(pwmp);
     if(enable_pwm) writePinHigh(led_row_pins[current_row]);
@@ -363,4 +369,16 @@ void SN32F24xB_set_color_all(uint8_t r, uint8_t g, uint8_t b) {
     for (int i=0; i<DRIVER_LED_TOTAL; i++) {
         SN32F24xB_set_color(i, r, g, b);
     }
+}
+
+uint8_t matrix_scan(void) {
+
+    bool changed = memcmp(raw_matrix, curr_matrix, sizeof(curr_matrix)) != 0;
+    if (changed) memcpy(raw_matrix, curr_matrix, sizeof(curr_matrix));
+
+    debounce(raw_matrix, matrix, MATRIX_ROWS, changed);
+    matrix_scan_quantum();
+    // reset curr matrix
+    memset(curr_matrix, 0, sizeof(curr_matrix));
+    return (uint8_t)changed;
 }
