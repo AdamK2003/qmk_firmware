@@ -339,7 +339,7 @@ bool matrix_post_scan(void) {
 }
 #endif
 
-uint8_t matrix_scan(void) {
+__attribute__((weak)) uint8_t matrix_scan(void) {
     matrix_row_t curr_matrix[MATRIX_ROWS] = {0};
 
 #if defined(DIRECT_PINS) || (DIODE_DIRECTION == COL2ROW)
