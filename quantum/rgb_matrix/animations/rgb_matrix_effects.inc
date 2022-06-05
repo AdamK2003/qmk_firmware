@@ -11,7 +11,7 @@
 #include "colorband_spiral_sat_anim.h"
 #include "colorband_spiral_val_anim.h"
 #include "cycle_all_anim.h"
-#include "cycle_left_right_anim.h"
+#include "cycle_left_right_anim.h" // default start
 #include "cycle_up_down_anim.h"
 #include "rainbow_moving_chevron_anim.h"
 #include "cycle_out_in_anim.h"
@@ -21,15 +21,15 @@
 #include "dual_beacon_anim.h"
 #include "rainbow_beacon_anim.h"
 #include "rainbow_pinwheels_anim.h"
-#include "raindrops_anim.h"
-#include "jellybean_raindrops_anim.h"
+#include "raindrops_anim.h" // crash
+#include "jellybean_raindrops_anim.h" // crash
 #include "hue_breathing_anim.h"
 #include "hue_pendulum_anim.h"
 #include "hue_wave_anim.h"
 #include "pixel_rain_anim.h"
 #include "pixel_fractal_anim.h"
 #include "typing_heatmap_anim.h"
-#include "digital_rain_anim.h"
+#include "digital_rain_anim.h" // crash
 #include "solid_reactive_simple_anim.h"
 #include "solid_reactive_anim.h"
 #include "solid_reactive_wide.h"
