@@ -7,8 +7,8 @@ static bool layer_rgb(effect_params_t* params) {
 
     HSV hsv_green = rgb_matrix_config.hsv; hsv_green.h = 85, hsv_green.s = 255;
     //HSV hsv_red = rgb_matrix_config.hsv; hsv_red.h = 0, hsv_red.s = 255;
-    HSV hsv_blue = rgb_matrix_config.hsv; hsv_blue.h = 152, hsv_blue.s = 255;
-    HSV hsv_yellow = rgb_matrix_config.hsv; hsv_yellow.h = 45, hsv_yellow.s = 255;
+    //HSV hsv_blue = rgb_matrix_config.hsv; hsv_blue.h = 152, hsv_blue.s = 255;
+    //HSV hsv_yellow = rgb_matrix_config.hsv; hsv_yellow.h = 45, hsv_yellow.s = 255;
     HSV hsv_black = rgb_matrix_config.hsv; hsv_black.h = 0, hsv_black.s = 0; hsv_black.v = 0;
 
 
@@ -33,6 +33,14 @@ static bool layer_rgb(effect_params_t* params) {
                             break;
 
                         } else if (keymap_key_to_keycode(i, (keypos_t){col,row}) > KC_TRNS) {
+
+                            if(i == 0) {
+                                outputColor = hsv_black;
+                                break;
+                            } else {
+                                outputColor = hsv_green; outputColor.h += 20*(i-1);
+                            }
+                            /*
                             switch (i) {
 
                                 case 0:
@@ -55,6 +63,7 @@ static bool layer_rgb(effect_params_t* params) {
                                     outputColor = hsv_black;
                                     break;
                             }
+                            */
                             break;
                         }
                     }
