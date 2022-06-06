@@ -38,7 +38,7 @@ static bool layer_rgb(effect_params_t* params) {
                                 outputColor = hsv_black;
                                 break;
                             } else {
-                                outputColor = hsv_green; outputColor.h += 20*(i-1);
+                                outputColor = hsv_green; outputColor.h += 40*(i-1);
                             }
                             /*
                             switch (i) {
