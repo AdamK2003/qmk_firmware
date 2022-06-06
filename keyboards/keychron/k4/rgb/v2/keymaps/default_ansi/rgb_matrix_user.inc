@@ -15,8 +15,8 @@ static bool layer_rgb(effect_params_t* params) {
 
     uint8_t layer = get_highest_layer(layer_state);
 
-    for (uint8_t row = 0; row < MATRIX_ROWS; ++row) {
-        for (uint8_t col = 0; col < MATRIX_COLS; ++col) {
+    for (uint8_t row = 0; row < MATRIX_ROWS; row++) {
+        for (uint8_t col = 0; col < MATRIX_COLS; col++) {
             uint8_t index = g_led_config.matrix_co[row][col];
 
             if (index >= led_min && index <= led_max && index != NO_LED) {
