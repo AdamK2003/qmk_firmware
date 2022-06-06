@@ -71,10 +71,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 {   _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,   _______,     _______,   _______,  _______,    KC_NO,  _______,  _______,  _______,  RGB_SAI },
                 {   _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,   _______,     _______,     KC_NO,  _______,    KC_NO,  _______,  _______,  _______,    KC_NO },
                 {   _______,    KC_NO,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,   _______,     _______,     KC_NO,  _______,  RGB_HUI,  _______,  _______,  _______,  _______ },
-                {   _______,  KC_LALT,  KC_LGUI,    KC_NO,    KC_NO,    KC_NO,  _______,    KC_NO,    KC_NO,    KC_NO,   _______,     MO(_FL),   _______,  RGB_SPD,  RGB_HUD,  RGB_SPI,  _______,  _______,    KC_NO }
+                {   _______,  _______,  _______,    KC_NO,    KC_NO,    KC_NO,  _______,    KC_NO,    KC_NO,    KC_NO,   _______,     MO(_FL),   _______,  RGB_SPD,  RGB_HUD,  RGB_SPI,  _______,  _______,    KC_NO }
               }
 
 };
+
 bool dip_switch_update_user(uint8_t index, bool active){
   switch(index){
     case 0:
@@ -96,16 +97,18 @@ bool dip_switch_update_user(uint8_t index, bool active){
   }
   return true;
 }
+
 void keyboard_post_init_user(void) {
   // Customise these values to desired behaviour
-  debug_enable=true;
-  debug_matrix=true;
+  //debug_enable=true;
+  //debug_matrix=true;
   //debug_keyboard=true;
   //debug_mouse=true;
 }
 
 uint8_t changed = 0;
 uint8_t last_mode  = 0;
+uint8_t forcedOff = 0;
 
 layer_state_t layer_state_set_user(layer_state_t state) {
   if (biton32(state) == 0) {
@@ -113,12 +116,40 @@ layer_state_t layer_state_set_user(layer_state_t state) {
       rgb_matrix_mode_noeeprom(last_mode);
       changed = 0;
     }
+    forcedOff = 0;
   }
   else {
-    last_mode = rgb_matrix_get_mode();
-    rgb_matrix_mode_noeeprom(RGB_MATRIX_CUSTOM_layer_rgb);
-    changed = 1;
+    if(!forcedOff && !changed) {
+      last_mode = rgb_matrix_get_mode();
+      rgb_matrix_mode_noeeprom(RGB_MATRIX_CUSTOM_layer_rgb);
+      changed = 1;
+    }
   };
   return state;
 }
 
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case RGB_TOG:
+        case RGB_MODE_FORWARD:
+        case RGB_MODE_REVERSE:
+        case RGB_HUI:
+        case RGB_HUD:
+        case RGB_SAI:
+        case RGB_SAD:
+        case RGB_VAI:
+        case RGB_VAD:
+        case RGB_SPI:
+        case RGB_SPD:
+            if (changed) {
+            rgb_matrix_mode_noeeprom(last_mode);
+            forcedOff = 1;
+            changed = 0;
+            }
+            break;
+        default:
+            break;
+    }
+
+    return true;
+}
